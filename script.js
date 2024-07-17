@@ -24,6 +24,19 @@ function drawNode(ctx, node, x, y, depth, minX, maxX) {
     ctx.textBaseline = 'middle';
     ctx.fillText(node.value, x, y);
 
+    // Draw circle for node
+    ctx.beginPath();
+    ctx.arc(x, y, 20, 0, 2 * Math.PI);
+    ctx.strokeStyle = '#333333';
+    ctx.stroke();
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+
+    // Draw text for node value
+    ctx.fillStyle = '#333333';
+    ctx.font = '18px Segoe UI';
+    ctx.fillText(node.value, x, y);
+
     if (node.left !== null) {
         const childX = x - (maxX - minX) / Math.pow(2, depth);
         const childY = y + 60;
