@@ -74,20 +74,19 @@ class BST {
     }
 
     search(value) {
-        const found = this.searchNode(this.root, value);
-        alert(found ? "Node found" : "Node not found");
+        return this.searchNode(this.root, value);
     }
 
     searchNode(node, value) {
         if (node === null) {
             return false;
         }
-        if (value < node.value) {
-            return this.searchNode(node.left, value);
-        } else if (value > node.value) {
-            return this.searchNode(node.right, value);
-        } else {
+        if (value === node.value) {
             return true;
+        } else if (value < node.value) {
+            return this.searchNode(node.left, value);
+        } else {
+            return this.searchNode(node.right, value);
         }
     }
 }
@@ -113,15 +112,21 @@ function deleteNode() {
 function searchNode() {
     const value = parseInt(document.getElementById("valueInput").value);
     if (!isNaN(value)) {
-        bst.search(value);
+        const found = bst.search(value);
+        if (found) {
+            alert(`Node with value ${value} found in the tree.`);
+        } else {
+            alert(`Node with value ${value} not found in the tree.`);
+        }
+        document.getElementById("valueInput").value = '';
     }
 }
 
 function drawTree() {
     const canvas = document.getElementById('bstCanvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth - 40;
-    canvas.height = window.innerHeight - 200;
+    canvas.width = window.innerWidth - 80;
+    canvas.height = window.innerHeight - 280;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (bst.root !== null) {
         drawNode(ctx, bst.root, canvas.width / 2, 30, canvas.width / 4);
@@ -131,11 +136,11 @@ function drawTree() {
 function drawNode(ctx, node, x, y, offset) {
     ctx.beginPath();
     ctx.arc(x, y, 20, 0, 2 * Math.PI);
-    ctx.fillStyle = '#fff';
+    ctx.fillStyle = '#ffffff';
     ctx.fill();
-    ctx.strokeStyle = '#000';
+    ctx.strokeStyle = '#333333';
     ctx.stroke();
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#333333';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(node.value, x, y);
